@@ -129,7 +129,7 @@ prompt_dir() {
 		if segment.size <= 3 
 			print segment + '/';
 		else \
-			print segment[0..1] + '…/' \
+			print segment[0..1] + '┋' \
 		end \
 	}; \
 	print path[-condense_depth..-1].join('/')"`
