@@ -120,7 +120,19 @@ prompt_hg() {
 
 # Dir: current working directory
 prompt_dir() {
-  prompt_segment blue black '%~'
+  prompt_segment blue black `ruby -e "\
+	path = Dir.pwd.split('/'); \
+	condense_depth = 2; \
+	print '/'; \
+	exit if path.empty?; \
+	path[1..-condense_depth-1].each { |segment| \
+		if segment.size <= 3 
+			print segment + '/';
+		else \
+			print segment[0..1] + '┋' \
+		end \
+	}; \
+	print path[-condense_depth..-1].join('/')"`
 }
 
 # Status:
