@@ -36,7 +36,7 @@ prompt_segment() {
   [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
   [[ -n $2 ]] && fg="%F{$2}" || fg="%f"
   if [[ $CURRENT_BG != 'NONE' && $1 != $CURRENT_BG ]]; then
-    echo -n "%{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%} "
+    echo -n "%{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%}"
   else
     echo -n "%{$bg%}%{$fg%}"
   fi
@@ -120,6 +120,8 @@ prompt_hg() {
 
 # Dir: current working directory
 prompt_dir() {
+  # print a compressed version of the path displaying only the first two 
+  # characters of each directory name
   prompt_segment blue black `ruby -e "\
 	path = Dir.pwd.split('/'); \
 	condense_depth = 2; \
@@ -166,10 +168,19 @@ prompt_time() {
 	fi	
 }
 
+# VirtualEnv
+# Display a symbol if we activated a virtualenv
+prompt_virtualenv() {
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        prompt_segment white black "V"
+   fi
+}
+
 ## Main prompt
 build_prompt() {
   RETVAL=$?
   prompt_status
+  prompt_virtualenv
   prompt_context
   prompt_dir
   prompt_git
