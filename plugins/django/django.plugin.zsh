@@ -54,7 +54,8 @@ _managepy-help(){
 _managepy_cmds(){
     local line
     local -a cmd
-    _call_program help-command ./manage.py help |& sed -n '/^    [a-z]/s/[(), ]/ /gp' \
+    _call_program help-command ./manage.py help \
+      | sed -n '/^    [a-z]/s/[(), ]/ /gp' \
       | while read -A line; do cmd=($line $cmd) done
     _describe -t managepy-command 'manage.py command' cmd
 }
@@ -196,10 +197,7 @@ _applist() {
   local line
   local -a apps
   _call_program help-command "python -c \"import os.path as op, re, django.conf, sys;\\
-                                          bn=op.basename(op.abspath(op.curdir));[sys\\
-                                          .stdout.write(str(re.sub(r'^%s\.(.*?)$' %
-                                          bn, r'\1', i)) + '\n') for i in django.conf.settings.\\
-                                          INSTALLED_APPS if re.match(r'^%s' % bn, i)]\"" \
+                                          print '\n'.join(django.conf.settings.INSTALLED_APPS) \"" \
                              | while read -A line; do apps=($line $apps) done
   _values 'Application' $apps && ret=0
 }
