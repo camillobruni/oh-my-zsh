@@ -289,7 +289,7 @@ _applist() {
   local line
   local -a apps
   _call_program help-command "python -c \"import os.path as op, re, django.conf, sys;\\
-                                          print '\n'.join(django.conf.settings.INSTALLED_APPS) \"" \
+  print('\n'.join(django.conf.settings.INSTALLED_APPS)) \"" \
                              | while read -A line; do apps=($line $apps) done
   _values 'Application' $apps && ret=0
 }
