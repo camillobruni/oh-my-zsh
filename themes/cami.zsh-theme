@@ -129,7 +129,7 @@ prompt_dir() {
 	exit if path.empty?; \
 	path[1..-condense_depth-1].each { |segment| \
 		if segment.size <= 3 
-			print segment + '/';
+			print segment + '⮁';
 		else \
 			print segment[0..1] + '⮁' \
 		end \
