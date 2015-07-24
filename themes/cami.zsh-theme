@@ -134,7 +134,7 @@ prompt_dir() {
 			print segment[0..1] + '⮁' \
 		end \
 	}; \
-	print path[-condense_depth..-1].join('/')"`
+	print path[-condense_depth..-1].join('⮁')"`
 }
 
 # Status:
